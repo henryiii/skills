@@ -13,7 +13,7 @@ This guide provides step-by-step instructions for removing Python 3.9 support fr
 - Confirm Python 3.9 is the current minimum by looking at the locations listed
   in step 1. Only one version should be dropped at a time.
     - If 3.8 or earlier, stop and tell the user they need to drop 3.8 first.
-    - If 3.10 or later, there's nothing to do, stop and congratulate the user.
+    - If 3.10 or later, check to see if there are any leftovers from a previous drop.
 - `uv` and `prek` are required, quit if they are not installed. You can run any
   other project-specific tools via `uvx`, such as `nox` -> `uvx nox`.
 
