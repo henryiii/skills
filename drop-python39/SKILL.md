@@ -1,5 +1,5 @@
 ---
-name: drop-python3-9
+name: drop-python39
 description: How to remove Python 3.9 support and upgrade to 3.10
 license: MIT
 ---
