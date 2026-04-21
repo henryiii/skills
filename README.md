@@ -21,4 +21,8 @@ gh skill install henryiii/skills
 
 (Requires a very recent version of GitHub's CLI.)
 
+Scripts:
 
+There's also a helper script, `scripts/opencode-copilot.py`, that launches
+copilot CLI using an opencode model configuration. Useful if you have a custom
+provider and want to try copilot CLI.
