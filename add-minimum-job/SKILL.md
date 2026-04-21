@@ -119,7 +119,7 @@ If tests fail:
 2. Check your `pyproject.toml` or `setup.py` for the version constraint
 3. Either update the constraint to match what works, or update your code to handle the older version
 
-### 7. Add to CI/CD (Optional)
+### 7. Add to CI/CD
 
 Consider adding the minimum version job to your GitHub Actions workflow:
 
