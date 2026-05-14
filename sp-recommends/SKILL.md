@@ -24,7 +24,7 @@ These are recommendations from the Scientific Python guide that don't have
 automated checks. Apply these first:
 
 - For nox users: use `uv|virtualenv` as the default backend (or `uv` only)
-- For GHA: set `FORCE_COLOR: 3` or `--forcecolor` for color output
+- For GHA: set `FORCE_COLOR: 3` or `--forcecolor` for color output. Don't worry aboud changing it if already set.
 - For GHA: set up a "pass job" using `re-actors/alls-green` for auto-merge support
 - For GHA: configure `.github/release.yml` for changelog generation
 - cibuildwheel: Use `build[uv]` as the build frontend for faster builds
@@ -99,12 +99,6 @@ After making changes, verify:
 # Run the full check
 uvx "sp-repo-review[cli]" --show err
 
-# Test the package still builds
-uv build
-
-# Run tests if available
-uv run pytest
-
 # Run the pre-commit checks
-uvx prek -a
+prek -a --quiet
 ```
