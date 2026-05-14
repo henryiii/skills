@@ -6,6 +6,7 @@ model, but anything else should work too.
 
 Skills:
 
+* branch-and-pr: Make a branch (if not on one), make a conventional commit, make a PR via `gh`
 * add-minimum-job: Add a minimum version test job to a noxfile
 * drop-python39: Drop Python 3.9
 * sp-recommends: Follow the Scientific-Python Developer Guide, using sp-repo-review
