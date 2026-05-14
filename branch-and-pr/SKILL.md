@@ -12,6 +12,7 @@ compatibility: "Requires git, gh CLI."
 * **No direct push to main or master** — always open a PR.
 * The user's github handle comes from `gh api user --jq .login` unless you already know it
 * Conventional Commits is followed
+* The upstream remote might be named `upstream`, if that it doesn't exist, it might be named `origin`.
 
 ## Definitions:
 
@@ -20,7 +21,9 @@ compatibility: "Requires git, gh CLI."
 `<id>`: a short identifier based on the contents of this change.
 `<summary>`: a one line description, can be specified by user input or summarize from the diff with main/master or current change.
 `<description>`: a longer description, summarized from the diff with main/master or current changes.
-`<trailer>`: An Assisted-by git trailer set to tool:model currently used, like `Assisted-by: OpenCode:Kimi-K2.6` or `Assisted-by: Pi:glm-5.1`, for example.
+`<trailer>`: A git trailer set to `Assisted-by: <harness>:<model>` currently used, like `Assisted-by: OpenCode:Kimi-K2.6` or `Assisted-by: Pi:glm-5.1`, for example.
+`<harness>`: The currenet agent harness.
+`<model>`: The current AI model.
 
 
 ## Make a branch
@@ -40,7 +43,7 @@ Use the `gh` tool to make a PR. Push to the user's fork if there is one,
 otherwise push to the upstream remote if the user has push permission. Make
 sure you add this line at the start of the PR description:
 
-:robot: *Human triggered, AI assisted PR ([skill here](https://github.com/henryiii/skills/blob/main/branch-and-pr/SKILL.md]). AI text below.* :robot:
+:robot: *Human triggered, AI assisted PR ([using this skill](https://github.com/henryiii/skills/blob/main/branch-and-pr/SKILL.md)). AI text below.* :robot:
 
 So users know the text is generated. Add the `<trailer>` above at the end of
 the description.
