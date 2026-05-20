@@ -2,6 +2,7 @@
 name: secure-ci
 description: "Use when user asks to secure a repo's CI"
 license: "MIT"
+compatibilty: Requires uvx (from uv) and npx (from nodejs).
 ---
 
 # Secure actions
