@@ -43,7 +43,7 @@ Use the `gh` tool to make a PR. Push to the user's fork if there is one,
 otherwise push to the upstream remote if the user has push permission. Make
 sure you add this line at the start of the PR description:
 
-:robot: *Human triggered, AI assisted PR ([using this skill](https://github.com/henryiii/skills/blob/main/branch-and-pr/SKILL.md)). AI text below.* :robot:
+:robot: *Human guided, AI assisted PR ([using this skill](https://github.com/henryiii/skills/blob/main/branch-and-pr/SKILL.md)). AI text below.* :robot:
 
 So users know the text is generated. Add the `<trailer>` above at the end of
 the description.
