@@ -8,13 +8,13 @@ Skills:
 
 * branch-and-pr: Make a branch (if not on one), make a conventional commit, make a PR via `gh`
 * add-minimum-job: Add a minimum version test job to a noxfile
-* drop-python39: Drop Python 3.9
+* drop-python: Drop Python (provide version, or drops lowest)
 * sp-recommends: Follow the Scientific-Python Developer Guide, using sp-repo-review
+* secure-ci: Secure a repository's CI
 
 To use:
 
-Either check this repository out at `~/.agents`, or any of the tool specific
-locations, or just grab a folder and drop it in to your tool's location.
+Grab a folder and drop it in to your tool's location.
 
 You can also install a skill using the `gh` tool, with:
 
