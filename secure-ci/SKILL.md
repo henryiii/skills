@@ -12,7 +12,12 @@ license: "MIT"
 * Check to see if `.pre-commit-config.yaml` exists; don't add one if it's not already there.
 * Assume monthly grouped updates unless a user asks for weekly or quarterly instead.
 
-## Step 1: zizmore
+## Step 1: actions
+
+
+Fully pin GHA. Use `npx actions-up -y --min-age=7 --style=sha --include-branches` to update and pin.
+
+## Step 2: zizmore
 
 The repo should use zizmor. If .pre-commit-config.yaml exists, this is a good hook:
 
@@ -22,23 +27,23 @@ The repo should use zizmor. If .pre-commit-config.yaml exists, this is a good ho
     hooks:
       - id: zizmor
         files: "^\\.github"
-        args: [--persona=auditor]
+        args: [--persona=pendatic]
 ```
 
-Run `uvx zizmor --persona=auditor .github` directly. Fix up the problems reported. 
+Run `uvx zizmor --persona=pedantic .github` directly. Fix up the problems reported.
 You can request auto-fixes with `--fix=safe` or `--fix=all` for some of the checks.
 
 Common problems / fixes:
 
-* Action pins: use `npx actions-up -y --min-age=7 --style=sha` to update and pin
 * If you need configuration, it should go into `.github/zizmor.yaml`.
+* The copilot-setup-steps.yml file is special - it does not need a concurrency setting. Ignore this check if zizmor thinks otherwise.
 * Ask the user if unsure on a fix.
 
-## Step 2: pre-commit (if applicable)
+## Step 3: pre-commit (if applicable)
 
 If the user is using pre-commit, run `prek auto-update --freeze --cooldown-days 7` to update and pin to sha.
 
-## Step 3: dependabot
+## Step 4: dependabot
 
 If the user does not use `.github/dependabot.yml`, add one like this:
 
@@ -73,13 +78,15 @@ the `ci:` block in that file, leave off the `pre-commit` ecosystem.
 If a user does have a `ci:` section in `.pre-commit-config.yaml`, but doesn't
 have `autoupdate_schedule` set,  set it.
 
-## Step 4: Isolate deploy jobs
+The old alias `"actions"` can be updated to `"github-actions"`.
+
+## Step 5: Isolate deploy jobs
 
 All deploy jobs should run seperatly from build jobs, to minimize the number of
 packages that run with access to deploy permissions. Use artifact
 upload/download to provide the required files for the deploy job.
 
-## Step 5: Add cooldowns to common locations
+## Step 6: Add cooldowns to common locations
 
 If this repo uses uv anywhere and has a pyproject.toml, add:
 

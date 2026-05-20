@@ -1,8 +1,9 @@
 # henryiii/skills
 
 This is a collection of skills following the open https://agentskills.io
-specification. They have been tested using OpenCode and the open Kimi-K2.5
-model, but anything else should work too.
+specification. They have been tested using OpenCode and the open models like
+Kimi, GLM, and Gemma, but anything else should work too. Note that `pi` does
+not tell the model what model it is.
 
 Skills:
 
@@ -20,7 +21,7 @@ You can also install a skill using the `gh` tool, with:
 
 gh skill install henryiii/skills
 
-(Requires a very recent version of GitHub's CLI.)
+(Requires a recent version of GitHub's CLI.)
 
 Scripts:
 
