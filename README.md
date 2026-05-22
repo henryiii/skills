@@ -1,6 +1,6 @@
 # henryiii/skills
 
-This is a collection of skills following the open https://agentskills.io
+This is a collection of skills following the open <https://agentskills.io>
 specification. They have been tested using OpenCode and the open models like
 Kimi, GLM, and Gemma, but anything else should work too. Note that `pi` does
 not tell the model what model it is.
@@ -15,7 +15,8 @@ Skills:
 
 To use:
 
-Grab a folder and drop it in to your tool's location. Or symlink it from the repo.
+Grab a folder and drop it in to your tool's location (`~/.agents/skills` works
+for most tools). Or symlink it from the repo.
 
 You can also install a skill using the `gh` tool, with:
 
@@ -32,13 +33,16 @@ provider and want to try copilot CLI.
 My global config (`~/.config/opencode/AGENTS.md`, `~/.pi/agent/APPEND_SYSTEM.md`, for example):
 
 ```
-You are on <OS>. The github user is <USER>. `python3` can be used if python without dependencies is needed. Use `uv run` if in a python package.
+You are on <OS>. The github user is <USER>. `python3` can be used if python
+without dependencies is needed. Use `uv run` if in a python package.
 
 Use relative paths when possible.
 
 Use `prek -a --quiet` instead of `pre-commit run -a` for linting
 
-If you make a commit, follow conventional commits and add a trailer: `Assisted-by: <harness>:<model>`, where `<harness>` is the current agent harness, and `<model>` is the AI model.
+If you make a commit, follow conventional commits and add a trailer:
+`Assisted-by: <harness>:<model>`, where `<harness>` is the current agent
+harness, and `<model>` is the AI model.
 ```
 
 * OS and USER can be replaced by your OS and GH username
