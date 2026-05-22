@@ -15,10 +15,13 @@ compatibilty: Requires uvx (from uv) and npx (from nodejs).
 
 ## Step 1: actions
 
+Fully pin GHA. Use `npx actions-up -y --min-age=7 --style=sha
+--include-branches` to update and pin.  Make sure all the updates are to the
+same or newer tags - the sorting mechanim for actions-up fails sometimes, like
+going from year based releases to old SemVer releases, or grabbing a tag that's
+not a normal release.
 
-Fully pin GHA. Use `npx actions-up -y --min-age=7 --style=sha --include-branches` to update and pin.
-
-## Step 2: zizmore
+## Step 2: zizmor
 
 The repo should use zizmor. If .pre-commit-config.yaml exists, this is a good hook:
 
@@ -39,6 +42,21 @@ Common problems / fixes:
 * If you need configuration, it should go into `.github/zizmor.yaml`.
 * The copilot-setup-steps.yml file is special - it does not need a concurrency setting. Ignore this check if zizmor thinks otherwise.
 * Ask the user if unsure on a fix.
+* Template expansion issues can be passed in via an environment variable instead.
+
+Template expansion fix example, before:
+
+```yaml
+      - run: uv run noxfile.py -s test-${{ matrix.python }}
+```
+
+After:
+
+```yaml
+      - run: uv run noxfile.py -s test-$PYTHON
+        env:
+          PYTHON: ${{ matrix.python }}
+```
 
 ## Step 3: pre-commit (if applicable)
 
@@ -61,6 +79,14 @@ updates:
           - "*"
     cooldown:
       default-days: 7
+```
+
+The old alias `"actions"` can be updated to `"github-actions"`.
+
+If the package has a `.pre-commit-config.yaml` but there's no `ci:` field in
+it, add this to `.github/dependabot.yml`:
+
+```yaml
   - package-ecosystem: "pre-commit"
     directory: "/"
     schedule:
@@ -73,13 +99,8 @@ updates:
       default-days: 7
 ```
 
-If the user does not have a pre-commit config file, or has any configuration in
-the `ci:` block in that file, leave off the `pre-commit` ecosystem.
-
 If a user does have a `ci:` section in `.pre-commit-config.yaml`, but doesn't
 have `autoupdate_schedule` set,  set it.
-
-The old alias `"actions"` can be updated to `"github-actions"`.
 
 ## Step 5: Isolate deploy jobs
 
