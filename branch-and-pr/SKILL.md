@@ -39,9 +39,10 @@ add those. The commit message should be `<type>: <summary>\n\n<description>\n\n<
 
 ## Make a PR
 
-Use the `gh` tool to make a PR. Push to the user's fork if there is one,
-otherwise push to the upstream remote if the user has push permission. Make
-sure you add this line at the start of the PR description:
+Use the `gh` tool to make a PR. Push to the user's fork if there is one (do not
+make a fork), otherwise push to the upstream remote if the user has push
+permission, and set upstream tracking. Make sure you add this line at the start
+of the PR description:
 
 :robot: *Human guided, AI assisted PR ([using this skill](https://github.com/henryiii/skills/blob/main/branch-and-pr/SKILL.md)). AI text below.* :robot:
 
