@@ -12,6 +12,7 @@ Skills:
 * drop-python: Drop Python (provide version, or drops lowest)
 * sp-recommends: Follow the Scientific-Python Developer Guide, using sp-repo-review
 * secure-ci: Secure a repository's CI
+* explore-issues: Mirror a repo's GitHub issues into SQLite, then triage/categorize them
 
 To use:
 
