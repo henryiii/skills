@@ -75,14 +75,14 @@ prek -a --quiet
 
 Custom patterns to look for, for specific versions of Python are provided:
 
-* Python 3.7: Read resources/python-37.md
-* Python 3.8: Read resources/python-38.md
-* Python 3.9: Read resources/python-39.md
-* Python 3.10: Read resources/python-310.md
-* Python 3.11: Read resources/python-311.md
-* Python 3.12: Read resources/python-312.md
-* Python 3.13: Read resources/python-313.md
-* Python 3.14: Read resources/python-314.md
+* Python 3.7: Read resources/python-3.7.md
+* Python 3.8: Read resources/python-3.8.md
+* Python 3.9: Read resources/python-3.9.md
+* Python 3.10: Read resources/python-3.10.md
+* Python 3.11: Read resources/python-3.11.md
+* Python 3.12: Read resources/python-3.12.md
+* Python 3.13: Read resources/python-3.13.md
+* Python 3.14: Read resources/python-3.14.md
 
 ### 8. Update Documentation
 
