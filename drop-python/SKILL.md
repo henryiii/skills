@@ -45,8 +45,24 @@ classifiers = [
 
 If the next version is already tested, drop it. If not, update from the old to the new.
 
-* GitHub Actions (`.github/workflow/*.yml`)
-* Other common CI systems
+* GitHub Actions (`.github/workflows/*.yml`). Read every file, not only the main
+  one. Reusable workflows, nightly jobs and packaging jobs each pin a version.
+* AppVeyor (`.appveyor.yml` or `appveyor.yml`)
+* Other CI systems: `.gitlab-ci.yml`, `.circleci/config.yml`,
+  `azure-pipelines.yml`, `.travis.yml`
+* Docs and task runners: `.readthedocs.yml`, `tox.ini`, `noxfile.py`
+
+Some CI systems write the version without a dot, as a path or a bare number.
+AppVeyor is the common example:
+
+```yaml
+environment:
+  matrix:
+  - PYTHON: 38     # expands to C:\Python38
+```
+
+A search for `3.8` does not find this. Use the undotted search in step 10.
+Linux container jobs do the same, for example `dnf install python38-devel`.
 
 ### 3. Update Pre-commit Hooks
 
@@ -109,10 +125,71 @@ Otherwise check for nox or tox, and run that.
 
 ### 10. Double-check for Remaining References
 
+Run all of these. Each one finds references that the others miss.
+
 ```bash
-# Search for 3.<minor> references
-git grep "\b3\.<minor>\b"
-git grep "\bpy3<minor>\b"
-git grep "3, <minor>"
+# 1. Dotted: 3.<minor>
+git grep -nE '(^|[^0-9.])3\.<minor>([^0-9]|$)'
+
+# 2. Undotted, with the prefix attached. This is the one people forget.
+#    Finds C:\Python38, python38-devel, cp38, pp38, py38, abi3-py38
+git grep -nE '(py|cp|pp|python|PYTHON|Python)-?3<minor>'
+
+# 3. Version tuples
+git grep -nE '3, ?<minor>'
+
+# 4. Bare number. Run this one too: it is the only search that finds a version
+#    held apart from its name, such as `PYTHON: 38` or `PY=38`, which search 2
+#    misses. Expect noise from unrelated numbers, so read the hits instead of
+#    trusting the count.
+git grep -nE '(^|[^0-9.])3<minor>([^0-9]|$)'
 ```
+
+Exclude generated and vendored paths to cut the noise, for example
+`':!docs/changelog.md' ':!*.svg'`.
+
+#### C and C++ projects
+
+Extension and header projects gate on `PY_VERSION_HEX`. The minor version is
+hex, so 3.8 is `0x030800`, 3.9 is `0x030900`, and 3.10 is `0x030A00`.
+
+```bash
+git grep -nE '0x030<minor-hex>'
+```
+
+Docs often repeat test code in a `code-block`. If you change a guard in a test,
+grep the docs for the same lines. A test file may say to keep the two in sync.
+
+#### Reverse sweep: guards that are now always true
+
+This step finds the real dead code. After the drop, any check for the new
+minimum `<new>` is always true, so the branch it guards can go. Search for the
+*new* version, not the old one.
+
+```bash
+git grep -nE '0x030<new-hex>'                 # C/C++: #if PY_VERSION_HEX >= <new>
+git grep -n 'version_info < (3, <new>)'       # Python: always False now
+git grep -n 'version_info >= (3, <new>)'      # Python: always True now
+```
+
+Remove the dead branch and un-indent the live one. Delete helpers that only the
+dead branch used, and any include or import that then goes unused.
+
+#### While you are there: always-False version checks
+
+`sys.version_info` is a 5-element tuple, so `== (3, 9)` can never be true. This
+bug hides for years because the guarded code simply never runs.
+
+```bash
+git grep -nE 'version_info[[:space:]]*==[[:space:]]*\(3, ?[0-9]+\)'
+```
+
+Note: `git grep -E` uses POSIX ERE, which has no `\s`. A pattern with `\s`
+matches nothing and prints no error, so it looks like a clean result. Use
+`[[:space:]]`, or use `git grep -P` for Perl syntax.
+
+The fix is `sys.version_info[:2] == (3, 9)`. Do not repair it silently: a
+comparison that was always False guards a branch that has never run, so
+"fixing" it turns on untested code. Report it and let the user choose between
+the fix and deleting the branch.
 
