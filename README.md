@@ -13,6 +13,7 @@ Skills:
 * sp-recommends: Follow the Scientific-Python Developer Guide, using sp-repo-review
 * secure-ci: Secure a repository's CI
 * explore-issues: Mirror a repo's GitHub issues into SQLite, then triage/categorize them
+* deslop: Remove AI writing patterns from prose (from [skill-deslop](https://github.com/stephenturner/skill-deslop))
 
 To use:
 
