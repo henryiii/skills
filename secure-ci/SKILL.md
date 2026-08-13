@@ -61,14 +61,21 @@ Common problems / fixes:
   `persist-credentials: true` and say why in a comment.
 * `excessive-permissions`: add `permissions: {}` at workflow level, then give
   each job only the permissions it uses.
-* `undocumented-permissions`: add a comment above each permission that says why
-  the job needs it.
+* `undocumented-permissions`: add a comment that says why the job needs each
+  permission. The comment must be on the same line. A comment on the line above
+  does not clear the finding:
+
+  ```yaml
+      permissions:
+        id-token: write  # trusted publishing to PyPI
+  ```
 * `unpinned-uses`: see step 1.
 * Add a `concurrency` group to each workflow.
 * The copilot-setup-steps.yml file is special - it does not need a concurrency setting. Ignore this check if zizmor thinks otherwise.
 * Template expansion issues can be passed in via an environment variable instead.
-* If you need configuration, it should go into `.github/zizmor.yaml`. Prefer a
-  fix over an ignore. If you must ignore, say why in a comment.
+* If you need configuration, it should go into `.github/zizmor.yml`. zizmor also
+  reads `.yaml`; if the repo has that spelling already, keep it. Prefer a fix
+  over an ignore. If you must ignore, say why in a comment.
 * Ask the user if unsure on a fix.
 
 Template expansion fix example, before:
@@ -92,6 +99,11 @@ If the user is using pre-commit, run `prek auto-update --freeze --cooldown-days 
 This can move a hook by a major version, and a new linter version can add new
 rules. Both make files fail that have nothing to do with CI security. See "Keep
 the scope small".
+
+Look at each new rev before you keep it. Do not accept a pre-release (alpha,
+beta, rc). If the hook repo is archived, the newest tag can be a pre-release
+that nobody supports; tell the user, and keep the current rev until they choose
+a maintained replacement.
 
 ## Step 4: dependabot
 
