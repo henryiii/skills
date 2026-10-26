@@ -9,7 +9,7 @@ compatibility: Requires uvx (from uv) and npx (from nodejs).
 
 ## Step 0: setup
 
-* If the user doesn't specify a cooldown, assume 7 days. The steps below write
+* If the user doesn't specify a cooldown, assume 3 days. The steps below write
   this value in several places; use the same number in all of them.
 * Check to see if `.pre-commit-config.yaml` exists; don't add one if it's not already there.
 * Assume monthly grouped updates unless a user asks for weekly or quarterly instead.
@@ -18,7 +18,7 @@ compatibility: Requires uvx (from uv) and npx (from nodejs).
 
 ## Step 1: actions
 
-Fully pin GHA. Use `npx actions-up -y --min-age=7 --style=sha
+Fully pin GHA. Use `npx actions-up -y --min-age=3 --style=sha
 --include-branches` to update and pin (`--min-age` takes the cooldown in days).
 Make sure all the updates are to the same or newer tags - the sorting mechanism
 for actions-up fails sometimes, like going from year based releases to old
@@ -94,7 +94,7 @@ After:
 
 ## Step 3: pre-commit (if applicable)
 
-If the user is using pre-commit, run `prek auto-update --freeze --cooldown-days 7` to update and pin to sha.
+If the user is using pre-commit, run `prek auto-update --freeze --cooldown-days 3` to update and pin to sha.
 
 This can move a hook by a major version, and a new linter version can add new
 rules. Both make files fail that have nothing to do with CI security. See "Keep
@@ -121,7 +121,7 @@ updates:
         patterns:
           - "*"
     cooldown:
-      default-days: 7
+      default-days: 3
 ```
 
 The old alias `"actions"` can be updated to `"github-actions"`.
@@ -139,7 +139,7 @@ it, add this to `.github/dependabot.yml`:
         patterns:
           - "*"
     cooldown:
-      default-days: 7
+      default-days: 3
 ```
 
 If a user does have a `ci:` section in `.pre-commit-config.yaml`, but doesn't
@@ -157,10 +157,10 @@ If this repo uses uv anywhere and has a pyproject.toml, add:
 
 ```toml
 [tool.uv]
-exclude-newer = "7 days"
+exclude-newer = "3 days"
 ```
 
-If there's any sign this repo uses `pixi`, add `exclude-newer = "7d"` to the
+If there's any sign this repo uses `pixi`, add `exclude-newer = "3d"` to the
 tool pixi table in `pyproject.toml` or `pixi.toml`
 
 ## Keep the scope small
