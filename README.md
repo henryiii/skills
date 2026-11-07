@@ -14,6 +14,7 @@ Skills:
 * secure-ci: Secure a repository's CI
 * explore-issues: Mirror a repo's GitHub issues into SQLite, then triage/categorize them
 * parallel-ci: Speed up GitHub Actions jobs with parallel/background steps
+* setup-lazy-imports: Set up flake8-lazy with pre-commit, apply `__lazy_modules__`, and verify nothing broke
 * deslop: Remove AI writing patterns from prose (from [skill-deslop](https://github.com/stephenturner/skill-deslop))
 
 To use:
