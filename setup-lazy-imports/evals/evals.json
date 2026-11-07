@@ -1,0 +1,66 @@
+{
+  "skill_name": "setup-lazy-imports",
+  "evals": [
+    {
+      "id": 0,
+      "name": "greenfield-no-precommit",
+      "prompt": "I've got a little CLI tool in this repo and it feels slow to start up. Can you set up lazy imports so it launches faster?",
+      "expected_output": "flake8-lazy hook added to a newly-created .pre-commit-config.yaml with args: [--apply=set] pinned to the latest tag; files rewritten with __lazy_modules__ (as sets); dataclasses left eager; tests pass and package imports.",
+      "files": [],
+      "assertions": [
+        "flake8-lazy repo block present in .pre-commit-config.yaml (github.com/henryiii/flake8-lazy)",
+        "flake8-lazy hook args include --apply=set",
+        "flake8-lazy rev pinned to a real version tag (vX.Y.Z)",
+        "at least one .py file gained a __lazy_modules__ set declaration ('__lazy_modules__ = {')",
+        "no file outside the main package (like tests/) gained __lazy_modules__",
+        "flake8-lazy hook has a files regex limited to the main package",
+        "dataclasses NOT added to any __lazy_modules__ (it is used at module top level)",
+        "test suite still passes",
+        "package imports cleanly (import mytool)",
+        "a .pre-commit-config.yaml was created (none existed before)"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "existing-precommit",
+      "prompt": "Add flake8-lazy to this project and apply it.",
+      "expected_output": "flake8-lazy repo block appended to the existing .pre-commit-config.yaml without clobbering the existing ruff/pre-commit-hooks entries or comments; args: [--apply=set]; files rewritten; tests pass.",
+      "files": [],
+      "assertions": [
+        "flake8-lazy repo block present in .pre-commit-config.yaml (github.com/henryiii/flake8-lazy)",
+        "flake8-lazy hook args include --apply=set",
+        "flake8-lazy rev pinned to a real version tag (vX.Y.Z)",
+        "at least one .py file gained a __lazy_modules__ set declaration ('__lazy_modules__ = {')",
+        "no file outside the main package (like tests/) gained __lazy_modules__",
+        "flake8-lazy hook has a files regex limited to the main package",
+        "dataclasses NOT added to any __lazy_modules__ (it is used at module top level)",
+        "test suite still passes",
+        "package imports cleanly (import mytool)",
+        "existing hooks preserved (ruff-format and trailing-whitespace still present)",
+        "exactly one flake8-lazy repo block (not duplicated)",
+        "existing YAML comments preserved"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "already-setup",
+      "prompt": "We already have flake8-lazy in pre-commit but I don't think it's actually doing anything - make it apply changes.",
+      "expected_output": "Existing flake8-lazy block updated in place: rev bumped to latest tag and args: [--apply=set] added; no duplicate block created; files rewritten; tests pass.",
+      "files": [],
+      "assertions": [
+        "flake8-lazy repo block present in .pre-commit-config.yaml (github.com/henryiii/flake8-lazy)",
+        "flake8-lazy hook args include --apply=set",
+        "flake8-lazy rev pinned to a real version tag (vX.Y.Z)",
+        "at least one .py file gained a __lazy_modules__ set declaration ('__lazy_modules__ = {')",
+        "no file outside the main package (like tests/) gained __lazy_modules__",
+        "flake8-lazy hook has a files regex limited to the main package",
+        "dataclasses NOT added to any __lazy_modules__ (it is used at module top level)",
+        "test suite still passes",
+        "package imports cleanly (import mytool)",
+        "exactly one flake8-lazy repo block (updated in place, not duplicated)",
+        "rev bumped away from the old v0.7.0",
+        "existing ruff hooks preserved"
+      ]
+    }
+  ]
+}
